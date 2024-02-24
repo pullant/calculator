@@ -1,0 +1,133 @@
+body {
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: darkslategray ;
+	height: 100dvh;
+	margin: 0;
+}
+
+main {
+	display: flex;
+	flex-direction: column;
+	height: 80dvh;
+	width: 60dvh;
+	margin-right: 1dvh;
+}
+main > * {
+	flex: 1;
+	margin-top: 1dvh;
+}
+
+#history,
+#display {
+	color: white;
+	margin-left: 1dvh;
+}
+
+#operators {
+	display: flex;
+}
+
+#first-row,
+#second-row,
+#third-row,
+#forth-row {
+	display: flex;
+}
+
+#operators > *,
+#first-row > *,
+#second-row > *,
+#third-row > *,
+#forth-row > * {
+	flex: 1;
+	display: flex;
+	align-items: center;
+	justify-content: center;
+	margin-left: 1dvh;
+}
+#operators > * {
+	border-radius: 50%;
+	background-color: slategray;
+}
+#first-row > *,
+#second-row > *,
+#third-row > *,
+#forth-row > * {
+	border-radius: 35%;
+	background-color: peachpuff;
+}
+
+#operators > * > * {
+	width: 20%;
+}
+
+#first-row > * > *,
+#second-row > * > *,
+#third-row > * > *,
+#forth-row > * > * {
+	width: 12%;
+}
+
+#zero {
+	flex: 2; /* 2 1 0% */
+	flex-basis: 1dvh;
+	border-radius: 50%;
+}
+#zero > * {
+	width: 6%;
+}
+
+#dot > * {
+	width: 8%;
+}
+
+
+#clearA {
+	background-color: salmon;
+	color: salmon;
+	border-bottom-right-radius: 0%;
+	border-bottom-left-radius: 0%;
+	border-top-left-radius: 20%;
+	border-top-right-radius: 20%;
+}
+#clearB {
+	display: flex;
+	align-items: flex-start;
+	background-color: salmon;
+	border-top-left-radius: 0%;
+	border-top-right-radius: 0%;
+	border-bottom-right-radius: 20%;
+	border-bottom-left-radius: 20%;
+	margin-top: -1dvh;
+}
+#clearB > * {
+	width: 20%;
+	margin-top: calc(((60dvh - 4dvh) / 4 * 0.20 * (9.9342775 / 15.143261) / 2 - 0.5dvh) * -1 );
+}
+
+#equalsA {
+	background-color: darkseagreen;
+	color: darkseagreen;
+	border-bottom-right-radius: 0%;
+	border-bottom-left-radius: 0%;
+	border-top-left-radius: 20%;
+	border-top-right-radius: 20%;
+}
+#equalsB {
+	display: flex;
+	background-color: darkseagreen;
+	align-items: flex-start;
+	border-top-left-radius: 0%;
+	border-top-right-radius: 0%;
+	border-bottom-right-radius: 20%;
+	border-bottom-left-radius: 20%;
+	margin-top: -1dvh;
+}
+#equalsB > * {
+	width: 20%;
+	margin-top: calc(((60dvh - 4dvh) / 4 * 0.20 * (4.876802 / 12.928603 ) / 2 - 0.5dvh) * -1 );
+	/* 		(width - margins) / (4 element in a row) * (size of image 20% width) * (ratio H / W) =>
+	height of image => / 2 (moved it half way) - (half extra margin) => (make it negative) */
+}
