@@ -1,7 +1,13 @@
-//TODO -3 + 1 breaks
+//TODO
+// -	-3 + 1 breaks
+// -	3.5 + 1 breaks no dot operator
+// -	3.5.6.7
+// -	some / 0 capture error
 let displayValue = "";
+let displayHistory = [];
 const main	=	document.querySelector("main");
 const display	=	document.querySelector("#display");
+const history	=	document.querySelector("#history");
 
 main.addEventListener("click", (e) => {
 	switch (e.target.id) {
@@ -89,20 +95,44 @@ main.addEventListener("click", (e) => {
 		case "equalsA":
 		case "equalsB":
 			console.log("=");
+			displayHistory.push(displayValue);
 			displayValue = resolveOperation(displayValue);
+			history.innerText = buildHistory(displayValue);
 			display.innerText = displayValue;
 			break;
 	}
 });
 
+/**
+ * @param {string} display : last calculated result unused variable
+ * @returns {string} display : new history of operations
+ */
+function buildHistory(display) {
+	let len = displayHistory.length;
+
+	displayHistory[len - 1] += ` = ${displayValue}`;
+
+	if (len === 4)
+		displayHistory.shift();
+
+	display = displayHistory.join("\n");
+
+	return display;
+}
+
 function resolveOperation(display) {
-	for (let i = 0; i < 10; i++) {
+	const completeOperation = displayValue;
+	for (let i = 0; i < 9; i++) {
 		if (display !== "" && displayValue !== "") {
+			console.log(`-------- Operation ${i + 1} -----------------------------------------------`);
 			display = calculate(parseOperation(display)) + displayValue;
 		}
-		else
+		else {
+			console.log(`-------- All Operations Completed ----------------------------------`);
 			return display;
+		}
 	}
+	console.log(`-------- ERROR: Too many operations at once ------------------------`);
 	return "ERROR: Too many operations at once."
 }
 
