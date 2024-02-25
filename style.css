@@ -25,15 +25,13 @@ main > * {
 	margin-left: 1dvh;
 }
 
-#operators {
-	display: flex;
-}
-
+#operators,
 #first-row,
 #second-row,
 #third-row,
 #forth-row {
 	display: flex;
+	user-select: none; /*prevent selection when double click numbers*/
 }
 
 #operators > *,
@@ -61,6 +59,7 @@ main > * {
 
 #operators > * > * {
 	width: 20%;
+	pointer-events: none; /* Make the image non-interactive */
 }
 
 #first-row > * > *,
@@ -68,6 +67,7 @@ main > * {
 #third-row > * > *,
 #forth-row > * > * {
 	width: 12%;
+	pointer-events: none; /* Make the image non-interactive */
 }
 
 #zero {
