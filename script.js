@@ -5,6 +5,9 @@
 // -	some / 0 capture error
 let displayValue = "";
 let displayHistory = [];
+let post = "";
+let prev = "";
+let prevLog = [];
 const main	=	document.querySelector("main");
 const display	=	document.querySelector("#display");
 const history	=	document.querySelector("#history");
@@ -95,8 +98,8 @@ main.addEventListener("click", (e) => {
 		case "equalsA":
 		case "equalsB":
 			console.log("=");
-			displayHistory.push(displayValue);
-			displayValue = resolveOperation(displayValue);
+			displayHistory.push(displayValue); // add operation to history
+			displayValue = resolveOperation(displayValue); // result of operation
 			history.innerText = buildHistory(displayValue);
 			display.innerText = displayValue;
 			break;
@@ -104,16 +107,22 @@ main.addEventListener("click", (e) => {
 });
 
 /**
- * @param {string} display : last calculated result unused variable
- * @returns {string} display : new history of operations
+ * Build a log of the last three operations completed from "old" to "new".
+ * @param {string} display Last calculated Result shown in the display.
+ * @returns {string} New history of completed operations.
  */
 function buildHistory(display) {
-	let len = displayHistory.length;
+	let length = displayHistory.length;
+	if (!display) {
+		displayHistory[length - 1] += "";
+	}
+	else {
+		displayHistory[length - 1] += ` = ${display}`;
+	}
 
-	displayHistory[len - 1] += ` = ${displayValue}`;
-
-	if (len === 4)
+	if (length === 4) {
 		displayHistory.shift();
+	}
 
 	display = displayHistory.join("\n");
 
@@ -121,19 +130,31 @@ function buildHistory(display) {
 }
 
 function resolveOperation(display) {
-	const completeOperation = displayValue;
+	let parsedOperation = "";
 	for (let i = 0; i < 9; i++) {
-		if (display !== "" && displayValue !== "") {
-			console.log(`-------- Operation ${i + 1} -----------------------------------------------`);
-			display = calculate(parseOperation(display)) + displayValue;
-		}
-		else {
+		if (displayValue === "") {
 			console.log(`-------- All Operations Completed ----------------------------------`);
 			return display;
 		}
+		else if (displayValue === "ERROR") {
+			console.log(`-------- All Operations Completed ----------------------------------`);
+			return "";
+		}
+		else {
+			console.log(`-------- Operation ${i + 1} -----------------------------------------------`);
+			console.log("resolveOperation() display =>", display);
+			console.log("resolveOperation() displayValue =>", displayValue);
+			parsedOperation = parseOperation(display);
+			prevLog[i] = prev;
+			if (i > 0 && prevLog[i] === prevLog[i - 1]) {
+				console.log(`-------- ERROR: Unsupported operation: op2 NO CHANGE ----------------`);
+				return "ERROR"
+			}
+			display = calculate(parsedOperation) + displayValue;
+		}
 	}
-	console.log(`-------- ERROR: Too many operations at once ------------------------`);
-	return "ERROR: Too many operations at once."
+	console.log(`-------- ERROR: Unsupported operation: op1 OVER MAX OPERATIONS ------`);
+	return "ERROR"
 }
 
 function parseOperation(operation) {
@@ -141,46 +162,54 @@ function parseOperation(operation) {
 	let b = "";
 	let operator = "";
 
-	console.log("prev: ", displayValue);//////////////////////
+	operation = operation.replace(/\s/g, "")
+	console.log("Parsing:\n\tprev: ", operation);
+	prev = operation;
+	let numbers = /-?\d+(\.\d+)?/g;
+	// make all - into (* -1)
+	//operation = operation.replace(/-(\d+(\.\d+)?)/g, (match, group) => "+" + group + "*-1");
+	numbers = operation.match(numbers);
+	console.log(numbers);
 
-	operation = operation.replace(/\s/g, "").split("")
+	a = numbers[0];
+	b = numbers[1];
 
-	let done = false; // capturing operators
-	for(let i of operation) {
-		if (!done && isNumber(i)) {
-			a += i;
-		}
-		else if (done && isNumber(i)) {
-			b += i;
-		}
-		else if (!done) {
-			done = true;
-			switch (i) {
-				case "+":
-				case "-":
-					operator = i;
-					break;
-				case "/":
-				case "*":
-				default:
-					display.innerText = "ERROR: Unsupported operation.";
-			}
-		}
-		else if (done) {
-			break;
-		}
+	operation = operation.replace(a, "n");
+		console.log(operation);
+	operation = operation.replace(b, "n");
+		console.log(operation);
+	let operationLength = operation.match(/.*n.*n/g)[0].length
+		console.log(operationLength);
+	if ( operationLength === 2) {
+		operation = operation.replaceAll("n", "");
+		operator = "+";
+	}
+	else if ( operationLength > 3) {
+		displayValue = "";
+		return "ERROR";
+	}
+	else {
+		console.log(operation.match(/n(.*)n/))
+		operator = operation.match(/n(.*)n/)[1] // match the group
+		operation = operation.replaceAll("n", "");
+		operation = operation.replace(operator, "");
+		console.log(operation[0])
 	}
 
+	if (operation[0] === "*" || operation[0] === "/") {
+		b = resolveOperation(b + operation);
+		operation = "";
+	}
 
+	if (b === "ERROR") {
+		displayValue = "";
+		return "ERROR";
+	}
 
-	// cut the display value to the rest of the operation
-	displayValue = operation.slice((a + b + operator).length).join("");
-	console.log("after: ", displayValue);//////////////////////
-	console.log(`a: ${a} b: ${b} operator: ${operator}`);//////////////////////
-
-	// in case press equals with no operation
-	if (b === "")
-		return [a];
+	displayValue = operation
+	console.log("\tpost: ", displayValue);
+	post = displayValue;
+	console.log(`\ta: ${a} b: ${b} operator: ${operator}`);
 
 	return [+a, +b, operator];
 }
@@ -189,14 +218,16 @@ function isNumber(character) {
 	return !isNaN(character) ;
 }
 
-function calculate(operation) {
-	let a = operation[0];
-	// in case press equals with no operation
-	if (!operation[1]) {
-		return operation[0];
+/**
+ * @param {number} a First operand.
+ * @param {number} b Second operand.
+ * @param {string} operator Operator.
+ * @returns {number} Result.
+ */
+function calculate([a, b, operator]) {
+	if (!operator) {
+		return a;
 	}
-	let b = operation[1];
-	let operator = operation[2];
 
 	switch (operator) {
 		case "+":
@@ -208,29 +239,30 @@ function calculate(operation) {
 		case "/":
 			return divide(a, b);
 		default:
-			alert( "Unsupported operation." );
+			console.log(`-------- ERROR: Unsupported operation: op4 UNSUPPORTED OPERATOR ------`);
+			return "ERROR";
 	}
 }
 
+/**
+ * Primitive Operations.
+ * @param {number} a First operand.
+ * @param {number} b Second operand.
+ * @returns {number} Result.
+ */
 function add(a, b) {
-	console.log(`${a} + ${b} =`, a + b);
+	console.log(`Parsed Operation:\n\t${a} + ${b} =`, a + b);
 	return a + b;
 }
-
-
 function subtract(a, b) {
-	console.log(`${a} - ${b} =`, a - b);
+	console.log(`Parsed Operation:\n\t${a} - ${b} =`, a - b);
 	return a - b;
 }
-
-
 function multiply(a, b) {
-	console.log(`${a} * ${b} =`, a * b);
+	console.log(`Parsed Operation:\n\t${a} * ${b} =`, a * b);
 	return a * b;
 }
-
-
 function divide(a, b) {
-	console.log(`${a} / ${b} =`, a / b);
+	console.log(`Parsed Operation:\n\t${a} / ${b} =`, a / b);
 	return a / b;
 }
