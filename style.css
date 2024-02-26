@@ -19,10 +19,26 @@ main > * {
 	margin-top: 1dvh;
 }
 
+
+@font-face {
+	font-family: 'MonaspaceRd';
+	src: url('./Monaspace/MonaspaceRadon-Regular.woff') format('woff');
+}
 #history,
 #display {
+	font-family: 'MonaspaceRd', monospace;
 	color: white;
-	margin-left: 1dvh;
+	margin-left: 3dvh;
+	margin-right: 2dvh;
+	overflow: auto; /* legacy overlay */
+	white-space: nowrap;
+	scrollbar-color: slategray darkslategray ;
+}
+#display {
+	font-size: 4dvh;
+}
+#history {
+	font-size: 2dvh;
 }
 
 #operators,

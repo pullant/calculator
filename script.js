@@ -106,6 +106,10 @@ main.addEventListener("click", (e) => {
 	}
 });
 
+main.addEventListener("click", (e) => {
+	display.scrollLeft = display.scrollWidth;
+});
+
 /**
  * Build a log of the last three operations completed from "old" to "new".
  * @param {string} display Last calculated Result shown in the display.
