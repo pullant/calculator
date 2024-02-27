@@ -31,7 +31,7 @@ main > * {
 	color: white;
 	margin-left: 3dvh;
 	margin-right: 2dvh;
-	overflow: auto; /* legacy overlay */
+	overflow: auto;
 	white-space: nowrap;
 	scrollbar-color: slategray darkslategray;
 }
@@ -94,8 +94,8 @@ main > * {
 	border-bottom-right-radius: 0%;
 }
 #clearB {
-	align-items: flex-start;
 	background-color: salmon;
+	align-items: flex-start;
 	border-top-left-radius: 0%;
 	border-top-right-radius: 0%;
 	border-bottom-left-radius: 20%;
@@ -104,10 +104,9 @@ main > * {
 }
 #clearB > * {
 	width: 25%;
-	margin-left: -0.5dvh;
+	margin-left: -0.25dvh;
 	margin-top: calc(((60dvh - 4dvh) / 4 * 0.25 * ( 15.494 / 20.827991 ) / 2 - 0.5dvh) * -1 );
-	/* 		(width - margins) / (4 element in a row) * (size of image 25% width) * (ratio H / W) =>
-	height of image => / 2 (moved it half way) - (half extra margin) => (make it negative) */
+	pointer-events: none;
 }
 
 #equalsA {
@@ -129,6 +128,13 @@ main > * {
 #equalsB > * {
 	width: 20%;
 	margin-top: calc(((60dvh - 4dvh) / 4 * 0.20 * ( 8.1280003 / 10.921991 ) / 2 - 0.5dvh) * -1 );
-	/* 		(width - margins) / (4 element in a row) * (size of image 20% width) * (ratio H / W) =>
-	height of image => / 2 (moved it half way) - (half extra margin) => (make it negative) */
+	/*
+	(page width - margins) /
+	(4 elements in row) *
+	(size of image width: 20% ) *
+	(ratio H / W) results in the height of the image /
+	2 (moved it half way) -
+	(half extra margin)
+	(make it negative) */
+	pointer-events: none;
 }
