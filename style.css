@@ -1,3 +1,8 @@
+@font-face {
+	font-family: 'JetBrainsMono';
+	src: url('./fonts/JetBrainsMono-Regular.woff2') format('woff2');
+}
+
 body {
 	display: flex;
 	align-items: center;
@@ -8,6 +13,8 @@ body {
 }
 
 main {
+	font-family: JetBrainsMono, monospace;
+	color: darkslategray;
 	display: flex;
 	flex-direction: column;
 	height: 80dvh;
@@ -19,20 +26,14 @@ main > * {
 	margin-top: 1dvh;
 }
 
-
-@font-face {
-	font-family: 'MonaspaceRd';
-	src: url('./Monaspace/MonaspaceRadon-Regular.woff') format('woff');
-}
 #history,
 #display {
-	font-family: 'MonaspaceRd', monospace;
 	color: white;
 	margin-left: 3dvh;
 	margin-right: 2dvh;
 	overflow: auto; /* legacy overlay */
 	white-space: nowrap;
-	scrollbar-color: slategray darkslategray ;
+	scrollbar-color: slategray darkslategray;
 }
 #display {
 	font-size: 4dvh;
@@ -69,21 +70,14 @@ main > * {
 #second-row > *,
 #third-row > *,
 #forth-row > * {
+	font-size: 3dvh;
 	border-radius: 35%;
 	background-color: peachpuff;
 }
 
 #operators > * > * {
 	width: 20%;
-	pointer-events: none; /* Make the image non-interactive */
-}
-
-#first-row > * > *,
-#second-row > * > *,
-#third-row > * > *,
-#forth-row > * > * {
-	width: 12%;
-	pointer-events: none; /* Make the image non-interactive */
+	pointer-events: none; /* Make the image non-interactive so click triggers events */
 }
 
 #zero {
@@ -91,54 +85,45 @@ main > * {
 	flex-basis: 1dvh;
 	border-radius: 50%;
 }
-#zero > * {
-	width: 6%;
-}
-
-#dot > * {
-	width: 8%;
-}
-
 
 #clearA {
 	background-color: salmon;
-	color: salmon;
-	border-bottom-right-radius: 0%;
-	border-bottom-left-radius: 0%;
 	border-top-left-radius: 20%;
 	border-top-right-radius: 20%;
+	border-bottom-left-radius: 0%;
+	border-bottom-right-radius: 0%;
 }
 #clearB {
-	display: flex;
 	align-items: flex-start;
 	background-color: salmon;
 	border-top-left-radius: 0%;
 	border-top-right-radius: 0%;
-	border-bottom-right-radius: 20%;
 	border-bottom-left-radius: 20%;
+	border-bottom-right-radius: 20%;
 	margin-top: -1dvh;
 }
 #clearB > * {
-	width: 20%;
-	margin-top: calc(((60dvh - 4dvh) / 4 * 0.20 * (9.9342775 / 15.143261) / 2 - 0.5dvh) * -1 );
+	width: 25%;
+	margin-left: -0.5dvh;
+	margin-top: calc(((60dvh - 4dvh) / 4 * 0.25 * (9.9342775 / 15.143261) / 2 - 0.5dvh) * -1 );
+	/* 		(width - margins) / (4 element in a row) * (size of image 25% width) * (ratio H / W) =>
+	height of image => / 2 (moved it half way) - (half extra margin) => (make it negative) */
 }
 
 #equalsA {
 	background-color: darkseagreen;
-	color: darkseagreen;
-	border-bottom-right-radius: 0%;
-	border-bottom-left-radius: 0%;
 	border-top-left-radius: 20%;
 	border-top-right-radius: 20%;
+	border-bottom-left-radius: 0%;
+	border-bottom-right-radius: 0%;
 }
 #equalsB {
-	display: flex;
 	background-color: darkseagreen;
 	align-items: flex-start;
 	border-top-left-radius: 0%;
 	border-top-right-radius: 0%;
-	border-bottom-right-radius: 20%;
 	border-bottom-left-radius: 20%;
+	border-bottom-right-radius: 20%;
 	margin-top: -1dvh;
 }
 #equalsB > * {

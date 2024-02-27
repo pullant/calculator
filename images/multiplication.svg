@@ -1,21 +1,46 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
 
 <svg
-   width="9.4995975mm"
-   height="9.3218069mm"
-   viewBox="0 0 9.4995975 9.3218069"
+   width="11.887194mm"
+   height="11.887203mm"
+   viewBox="0 0 11.887194 11.887203"
    version="1.1"
    id="svg1"
+   sodipodi:docname="multiplication.svg"
+   inkscape:version="1.3 (0e150ed, 2023-07-21)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
    xmlns="http://www.w3.org/2000/svg"
    xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="12.70922"
+     inkscape:cx="22.464006"
+     inkscape:cy="22.464006"
+     inkscape:window-width="1366"
+     inkscape:window-height="768"
+     inkscape:window-x="0"
+     inkscape:window-y="0"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="svg1" />
   <defs
      id="defs1" />
   <g
      id="layer1"
-     transform="translate(-94.828348,-113.47313)">
+     transform="translate(-208.0667,-118.27362)"
+     style="fill:#2f4f4f;fill-opacity:1">
     <path
-       d="m 99.578153,117.23234 -3.5052,-3.4544 c -0.2286,-0.2032 -0.4064,-0.3048 -0.5842,-0.3048 -0.3556,0 -0.6604,0.2794 -0.6604,0.635 0,0.2032 0.0762,0.3556 0.3048,0.5842 l 3.5306,3.429 -3.5306,3.4544 c -0.2286,0.2286 -0.3048,0.381 -0.3048,0.5842 0,0.3556 0.2794,0.635 0.6604,0.635 0.2032,0 0.3556,-0.0762 0.5842,-0.3048 l 3.5052,-3.4544 3.530597,3.4544 c 0.2286,0.2286 0.3556,0.3048 0.5588,0.3048 0.381,0 0.6604,-0.2794 0.6604,-0.635 0,-0.2032 -0.0762,-0.381 -0.3048,-0.5842 l -3.5052,-3.4544 3.5052,-3.429 c 0.2032,-0.2032 0.3048,-0.381 0.3048,-0.5588 0,-0.381 -0.3048,-0.6604 -0.6604,-0.6604 -0.1778,0 -0.3302,0.0762 -0.5588,0.3048 z"
-       id="text1-7"
-       aria-label="×" />
+       d="m 209.51449,130.13542 -1.4224,-1.4224 4.47039,-4.4704 -4.49579,-4.4958 1.4732,-1.4732 4.49579,4.4958 4.4704,-4.4704 1.4224,1.4224 -4.4704,4.4704 4.4958,4.4958 -1.4732,1.4732 -4.4958,-4.4958 z"
+       style="font-size:25.4px;font-family:'JetBrainsMonoNL NF';-inkscape-font-specification:'JetBrainsMonoNL NF, Normal';stroke-width:0.264583;fill:#2f4f4f;fill-opacity:1"
+       id="path1-4" />
   </g>
 </svg>
