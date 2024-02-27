@@ -252,6 +252,7 @@ function parseOperation(operation) {
 	let a = "";
 	let b = "";
 	let operator = "";
+	let operationLength = 0;
 
 	operation = operation.replace(/\s/g, "")
 	console.log("Parsing:\n\tprev: ", operation);
@@ -275,7 +276,7 @@ function parseOperation(operation) {
 		return [+a];
 	}
 	else {
-		let operationLength = operation.match(/.*n.*n/g)[0].length
+		operationLength = operation.match(/.*n.*n/g)[0].length;
 			console.log(operationLength);
 	}
 	if ( operationLength === 2) {
