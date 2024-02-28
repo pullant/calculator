@@ -86,27 +86,13 @@ main > * {
 	border-radius: 50%;
 }
 
-#clearA {
-	background-color: salmon;
-	border-top-left-radius: 20%;
-	border-top-right-radius: 20%;
-	border-bottom-left-radius: 0%;
-	border-bottom-right-radius: 0%;
+#backspace {
+	border-radius: 20%;
 }
-#clearB {
+
+#clear {
 	background-color: salmon;
-	align-items: flex-start;
-	border-top-left-radius: 0%;
-	border-top-right-radius: 0%;
-	border-bottom-left-radius: 20%;
-	border-bottom-right-radius: 20%;
-	margin-top: -1dvh;
-}
-#clearB > * {
-	width: 25%;
-	margin-left: -0.25dvh;
-	margin-top: calc(((60dvh - 4dvh) / 4 * 0.25 * ( 15.494 / 20.827991 ) / 2 - 0.5dvh) * -1 );
-	pointer-events: none;
+	border-radius: 20%;
 }
 
 #equalsA {
@@ -123,18 +109,16 @@ main > * {
 	border-top-right-radius: 0%;
 	border-bottom-left-radius: 20%;
 	border-bottom-right-radius: 20%;
-	margin-top: -1dvh;
+	margin-top: -2dvh;
 }
 #equalsB > * {
 	width: 20%;
-	margin-top: calc(((60dvh - 4dvh) / 4 * 0.20 * ( 8.1280003 / 10.921991 ) / 2 - 0.5dvh) * -1 );
+	margin-top: calc(((60dvh - 4dvh) / 4 * 0.20 * ( 8.1280003 / 10.921991 ) / 2 * -1 ) + 1.5dvh);
 	/*
-	(page width - margins) /
-	(4 elements in row) *
-	(size of image width: 20% ) *
-	(ratio H / W) results in the height of the image /
-	2 (moved it half way) -
-	(half extra margin)
-	(make it negative) */
+	(page width - margins) / (4 elements in row) => width of container
+	 * (size of image width: 20% ) => width of image
+	 * (ratio H / W) => height of the image
+	 / 2 (moved it half way) (make it negative) => centered based on width on the edge of container
+	 - (half margin of default container) */
 	pointer-events: none;
 }

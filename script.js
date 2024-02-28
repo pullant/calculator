@@ -84,9 +84,13 @@ main.addEventListener("click", (e) => {
 			displayValue += " - ";
 			display.innerText = displayValue;
 			break;
-		case "clearA":
-		case "clearB":
+		case "backspace":
 			console.log("⌫");
+			displayValue = display.textContent.slice(0, -1);
+			display.innerText = displayValue;
+			break;
+		case "clear":
+			console.log("C");
 			displayValue = "";
 			display.innerText = displayValue;
 			break;
@@ -184,6 +188,11 @@ document.addEventListener("keydown", (e) => {
 			e.preventDefault();
 			console.log("⌫");
 			displayValue = display.textContent.slice(0, -1);
+			display.innerText = displayValue;
+			break;
+		case "Escape":
+			console.log("C");
+			displayValue = "";
 			display.innerText = displayValue;
 			break;
 		case "Enter":
