@@ -8,6 +8,7 @@ body {
 	align-items: center;
 	justify-content: center;
 	background-color: darkslategray ;
+	height: 100vh;
 	height: 100dvh;
 	margin: 0;
 }
@@ -17,6 +18,8 @@ main {
 	color: darkslategray;
 	display: flex;
 	flex-direction: column;
+	height: 80vh;
+	width: 60vh;
 	height: 80dvh;
 	width: 60dvh;
 	margin-right: 1dvh;
