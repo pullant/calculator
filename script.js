@@ -98,9 +98,10 @@ main.addEventListener("click", (e) => {
 		case "equalsB":
 			console.log("=");
 			displayHistory.push(displayValue);
-			displayValue = resolveOperation(displayValue);
-			history.innerText = buildHistory(displayValue);
-			display.innerText = displayValue;
+			let result = resolveOperation(displayValue);
+			history.innerText = buildHistory(result, 3);
+			display.innerText = result;
+			displayValue = result;
 			break;
 	}
 	display.scrollLeft = display.scrollWidth;
@@ -198,35 +199,36 @@ document.addEventListener("keydown", (e) => {
 		case "Enter":
 			console.log("=");
 			displayHistory.push(displayValue);
-			displayValue = resolveOperation(displayValue);
-			history.innerText = buildHistory(displayValue);
-			display.innerText = displayValue;
+			let result = resolveOperation(displayValue);
+			history.innerText = buildHistory(result, 3);
+			display.innerText = result;
+			displayValue = result;
 			break;
 	}
 	display.scrollLeft = display.scrollWidth;
 });
 
 /**
- * Build a log of the last three operations completed from "old" to "new".
- * @param {string} display Last calculated Result shown in the display.
+ * Build a log of the last operations completed from "old" to "new".
+ * @param {string} result
+ * @param {number} numOfHistoryElements
  * @returns {string} New history of completed operations.
  */
-function buildHistory(display) {
+function buildHistory(result, numOfHistoryElements) {
 	let length = displayHistory.length;
-	if (!display) {
-		displayHistory[length - 1] += "";
-	}
-	else {
-		displayHistory[length - 1] += ` = ${display}`;
+
+	if (!result) {
+		displayHistory.pop();
+		return displayHistory.join("\n");
 	}
 
-	if (length === 4) {
+	displayHistory[length - 1] += ` = ${result}`;
+
+	if (length > numOfHistoryElements) {
 		displayHistory.shift();
 	}
 
-	display = displayHistory.join("\n");
-
-	return display;
+	return displayHistory.join("\n");
 }
 
 function resolveOperation(display) {
