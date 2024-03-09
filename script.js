@@ -1,12 +1,42 @@
-let displayValue	= "";
-let displayHistory	= [];
-let post		= "";
-let prev		= "";
-let prevLog		= [];
-const main		= document.querySelector("main");
-const display		= document.querySelector("#display");
-const history		= document.querySelector("#history");
+/**
+ * Internal variable that keeps track of the current result.
+ * @type {string}
+ */
+let displayValue = "";
 
+/** @type {string[]} */
+let displayHistory = [];
+
+/** @type {string} */
+let post = "";
+
+/** @type {string} */
+let prev = "";
+
+/** @type {string[]} */
+let prevLog = [];
+
+/**
+ * Complete interface of the calculator.
+ * @type {HTMLElement}
+ */
+const main = document.querySelector("main");
+
+/**
+ * Display that shows current operation.
+ * @type {HTMLElement}
+ */
+const display = document.querySelector("#display");
+
+/**
+ * Display that shows previous operations.
+ * @type {HTMLElement}
+ */
+const history = document.querySelector("#history");
+
+/**
+ * Mouse support.
+ */
 main.addEventListener("click", (e) => {
 	switch (e.target.id) {
 		case "one":
@@ -98,6 +128,7 @@ main.addEventListener("click", (e) => {
 		case "equalsB":
 			console.log("=");
 			displayHistory.push(displayValue);
+			/** @type {string} */
 			let result = resolveOperation(displayValue);
 			history.innerText = buildHistory(result, 3);
 			display.innerText = result;
@@ -107,6 +138,9 @@ main.addEventListener("click", (e) => {
 	display.scrollLeft = display.scrollWidth;
 });
 
+/**
+ * Keyboard support.
+ */
 document.addEventListener("keydown", (e) => {
 	switch (e.key) {
 		case "1":
@@ -199,6 +233,7 @@ document.addEventListener("keydown", (e) => {
 		case "Enter":
 			console.log("=");
 			displayHistory.push(displayValue);
+			/** @type {string} */
 			let result = resolveOperation(displayValue);
 			history.innerText = buildHistory(result, 3);
 			display.innerText = result;
