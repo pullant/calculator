@@ -266,39 +266,6 @@ function buildHistory(result, numOfHistoryElements) {
 	return displayHistory.join("\n");
 }
 
-function olveOperation(operation) {
-	let parsedOperation = "";
-	for (let i = 0; i < 9; i++) {
-		if (displayValue === "") {
-			console.log(`-------- Operation ${i + 1} -----------------------------------------------`);
-			console.log("solveOperation()\n\toperation =>", operation);
-			console.log(`-------- DONE ------------------------------------------------------`);
-			console.log("Result = ", operation);
-			console.log(`====================================================================`);
-			return operation;
-		}
-		else if (displayValue === "ERROR") {
-			console.log(`-------- All Operations Completed ----------------------------------`);
-			console.log(`====================================================================`);
-			return "";
-		}
-		else {
-			console.log(`-------- Operation ${i + 1} -----------------------------------------------`);
-			console.log("solveOperation()\n\toperation =>", operation);
-			console.log("\tdisplayValue =>", displayValue);
-			parsedOperation = parseOperation(operation);
-			prevLog[i] = prev;
-			if (i > 0 && prevLog[i] === prevLog[i - 1]) {
-				console.log(`-------- ERROR: Unsupported operation: op2 NO CHANGE ---------------`);
-				return "ERROR"
-			}
-			operation = calculate(parsedOperation) + displayValue;
-		}
-	}
-	console.log(`-------- ERROR: Unsupported operation: op1 OVER MAX OPERATIONS -----`);
-	return "ERROR"
-}
-
 /**
  * Recursion counter.
  * @type {number}
@@ -314,16 +281,16 @@ function solveOperation(operation) {
 	let parsed = parseOperation(operation);
 	/*
 	if parsed is:
-		"" -> DONE -> operation
-		"number" -> DONE -> operation
-		"final result" -> DONE -> operation
-		"ERROR" -> DONE -> "" (max num recursions)
+		"" -> DONE => operation
+		"number" -> DONE => operation
+		"final result" -> DONE => operation
+		"ERROR" -> DONE => "" (max num recursions)
 
-		"operation" ->
-			calculate(operation) -> result
-			displayValue -> displayValue - operation -> displayValue
-			result + displayValue -> "operation" -> solveOperation(operation) ||
-				-> "ERROR" too many recursions/operations
+		[operation] ->
+			calculate([operation]) -> result
+			(displayValue -> displayValue without [operation] -> displayValue)
+			result + displayValue -> "operation" => solveOperation(operation) ||
+				=> "ERROR" too many recursions/operations
 	*/
 
 	// Add round of recursion
@@ -337,6 +304,8 @@ function solveOperation(operation) {
 	if (parsed === "DONE") {
 		console.log(`-------- Operation ${i} -----------------------------------------------`);
 		console.log("solveOperation()\n\toperation =>", operation);
+		console.log("\tdisplayValue =>", displayValue);
+		console.log("\tparsed =>", parsed);
 		console.log(`-------- DONE ------------------------------------------------------`);
 		console.log("Result = ", operation);
 		console.log(`====================================================================`);
@@ -351,6 +320,7 @@ function solveOperation(operation) {
 	console.log(`-------- Operation ${i} -----------------------------------------------`);
 	console.log("solveOperation()\n\toperation =>", operation);
 	console.log("\tdisplayValue =>", displayValue);
+	console.log("\tparsed =>", parsed);
 	prevLog[i - 1] = prev;
 	if (i > 1 && prevLog[i - 1] === prevLog[i]) {
 		console.log(`-------- ERROR: Unsupported operation: op2 NO CHANGE ---------------`);
@@ -358,38 +328,6 @@ function solveOperation(operation) {
 	}
 	operation = calculate(parsed) + displayValue;
 	return solveOperation(operation);
-
-	/*let parsed = "";
-	for (let i = 0; i < 9; i++) {
-		if (displayValue === "") {
-			console.log(`-------- Operation ${i + 1} -----------------------------------------------`);
-			console.log("solveOperation()\n\toperation =>", operation);
-			console.log(`-------- DONE ------------------------------------------------------`);
-			console.log("Result = ", operation);
-			console.log(`====================================================================`);
-			return operation;
-		}
-		else if (displayValue === "ERROR") {
-			console.log(`-------- All Operations Completed ----------------------------------`);
-			console.log(`====================================================================`);
-			return "";
-		}
-		else {
-			console.log(`-------- Operation ${i + 1} -----------------------------------------------`);
-			console.log("solveOperation()\n\toperation =>", operation);
-			console.log("\tdisplayValue =>", displayValue);
-			parsed = parseOperation(operation);
-			prevLog[i] = prev;
-			if (i > 0 && prevLog[i] === prevLog[i - 1]) {
-				console.log(`-------- ERROR: Unsupported operation: op2 NO CHANGE ---------------`);
-				return "ERROR"
-			}
-			operation = calculate(parsed) + displayValue;
-		}
-	}
-	console.log(`-------- ERROR: Unsupported operation: op1 OVER MAX OPERATIONS -----`);
-	return "ERROR"
-	*/
 }
 
 /**
@@ -402,10 +340,10 @@ function solveOperation(operation) {
 function parseOperation(operation) {
 	/*
 	if operation is:
-		"" -> DONE
-		"number" -> DONE
-		"final result" -> DONE
-		"ERROR" -> ERROR
+		"" -> DONE => "DONE"
+		"number" -> DONE => "DONE"
+		"final result" -> DONE => "DONE"
+		"ERROR" => "ERROR"
 
 	else parse operation:
 	*/
@@ -420,29 +358,24 @@ function parseOperation(operation) {
 		return "ERROR";
 	}
 
-	/////////////////////////////////////////////////////////////////////
-
 	let a = "";
 	let b = "";
 	let operator = "";
 	let operationLength = 0;
 
 	operation = operation.replace(/\s/g, "")
-	console.log("Parsing:\n\tprev: ", operation);
+	console.log(`-------- Parsing: -----------------------------------------------------`);
 	prev = operation;
-	let numbers = /[-\+]?\d+(\.\d+)?/g;
-	// make all - into (* -1)
-	//operation = operation.replace(/-(\d+(\.\d+)?)/g, (match, group) => "+" + group + "*-1");
-	numbers = operation.match(numbers);
-	console.log(numbers);
-
+	console.log("\tprev parsing: ", prev);
+	console.log("\tProcessing...");
+	let numbers = operation.match(/[-\+]?\d+(\.\d+)?/g);
+	console.log("\tnumbers:", numbers);
 	a = numbers[0];
 	b = numbers[1];
-
 	operation = operation.replace(a, "n");
-		console.log(operation);
+	console.log("\t" + operation);
 	operation = operation.replace(b, "n");
-		console.log(operation);
+	console.log("\t" + operation);
 
 	if (!b) {
 		displayValue = "";
@@ -450,23 +383,27 @@ function parseOperation(operation) {
 	}
 	else {
 		operationLength = operation.match(/.*n.*n/g)[0].length;
-			console.log(operationLength);
+		console.log("\toperation lenght:", operationLength);
 	}
-	if ( operationLength === 2) {
+	if (operationLength === 2) {
+		console.log("\tabstract operation:", operation.match(/n(.*)n/))
 		operation = operation.replaceAll("n", "");
+		console.log("\tnext operation:", operation)
 		operator = "+";
 	}
-	else if ( operationLength > 3) {
+	else if (operationLength > 3) {
 		displayValue = "";
 		console.log(`-------- ERROR: Unsupported operator: TOO MANY OPERATORS [ ${operation} ] --`);
 		return "ERROR";
 	}
 	else {
-		console.log(operation.match(/n(.*)n/))
+		console.log("\tabstract operation:", operation.match(/n(.*)n/))
 		operator = operation.match(/n(.*)n/)[1] // match the group
+		console.log("\t1:", operation)
 		operation = operation.replaceAll("n", "");
+		console.log("\t2:", operation)
 		operation = operation.replace(operator, "");
-		console.log(operation[0])
+		console.log("\t3:", operation)
 	}
 
 	if (operation[0] === "*" || operation[0] === "/") {
@@ -480,75 +417,9 @@ function parseOperation(operation) {
 	}
 
 	displayValue = operation
-	console.log("\tpost: ", displayValue);
 	post = displayValue;
-	console.log(`\ta: ${a} b: ${b} operator: ${operator}`);
-
-	return [+a, +b, operator];
-}
-
-function arseOperation(operation) {
-	let a = "";
-	let b = "";
-	let operator = "";
-	let operationLength = 0;
-
-	operation = operation.replace(/\s/g, "")
-	console.log("Parsing:\n\tprev: ", operation);
-	prev = operation;
-	let numbers = /[-\+]?\d+(\.\d+)?/g;
-	// make all - into (* -1)
-	//operation = operation.replace(/-(\d+(\.\d+)?)/g, (match, group) => "+" + group + "*-1");
-	numbers = operation.match(numbers);
-	console.log(numbers);
-
-	a = numbers[0];
-	b = numbers[1];
-
-	operation = operation.replace(a, "n");
-		console.log(operation);
-	operation = operation.replace(b, "n");
-		console.log(operation);
-
-	if (!b) {
-		displayValue = "";
-		return [+a];
-	}
-	else {
-		operationLength = operation.match(/.*n.*n/g)[0].length;
-			console.log(operationLength);
-	}
-	if ( operationLength === 2) {
-		operation = operation.replaceAll("n", "");
-		operator = "+";
-	}
-	else if ( operationLength > 3) {
-		displayValue = "";
-		console.log(`-------- ERROR: Unsupported operator: TOO MANY OPERATORS [ ${operation} ] --`);
-		return "ERROR";
-	}
-	else {
-		console.log(operation.match(/n(.*)n/))
-		operator = operation.match(/n(.*)n/)[1] // match the group
-		operation = operation.replaceAll("n", "");
-		operation = operation.replace(operator, "");
-		console.log(operation[0])
-	}
-
-	if (operation[0] === "*" || operation[0] === "/") {
-		b = solveOperation(b + operation);
-		operation = "";
-	}
-
-	if (b === "ERROR") {
-		displayValue = "";
-		return "ERROR";
-	}
-
-	displayValue = operation
-	console.log("\tpost: ", displayValue);
-	post = displayValue;
-	console.log(`\ta: ${a} b: ${b} operator: ${operator}`);
+	console.log("\tParsed operation => a:", a, "b:", b, "operator:", operator);
+	console.log("\tpost parsing: ", post);
 
 	return [+a, +b, operator];
 }
@@ -560,7 +431,7 @@ function arseOperation(operation) {
  * @returns {number} Result.
  */
 function calculate([a, b, operator]) {
-	console.log("a:", a, "b:", b, "operator:", operator);
+	console.log("calculate()\n\t[operation] => a:", a, "b:", b, "operator:", operator);
 
 	if (!operator)
 		return a;
@@ -588,10 +459,12 @@ function calculate([a, b, operator]) {
 	}
 
 	if (result === Infinity || result === -Infinity) {
-		console.log(`-------- ERROR: Unsupported result: op4 [ Infinity or -Infinity ] --`);
+		console.log("\tresult:", result);
+		console.log(`-------- ERROR: Unsupported result: op4 Infinity or -Infinity ------`);
 		return "ERROR";
 	}
 	else {
+		console.log("\tresult:", result);
 		return result;
 	}
 }
@@ -603,18 +476,14 @@ function calculate([a, b, operator]) {
  * @returns {number} Result.
  */
 function add(a, b) {
-	console.log(`Parsed Operation:\n\t${a} + ${b} =`, a + b);
 	return a + b;
 }
 function subtract(a, b) {
-	console.log(`Parsed Operation:\n\t${a} - ${b} =`, a - b);
 	return a - b;
 }
 function multiply(a, b) {
-	console.log(`Parsed Operation:\n\t${a} * ${b} =`, a * b);
 	return a * b;
 }
 function divide(a, b) {
-	console.log(`Parsed Operation:\n\t${a} / ${b} =`, a / b);
 	return a / b;
 }
