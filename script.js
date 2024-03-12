@@ -330,12 +330,24 @@ function solveOperation(operation) {
 	return solveOperation(operation);
 }
 
+
+/**
+ * @typedef Operation
+ * @type {[a: number, b: number, operator: string]}
+ */
+
+/* jsdoc
+ * Solve operation and handle errors.
+ * @param {string} operation
+ * @returns {(Array<number, string> | string)}
+ * 	[a, b, operator] An array with the operands a and b, and their operator.
+ * 	Or, a string with a number, the final result, or an ERROR.
+ */
+
 /**
  * Solve operation and handle errors.
  * @param {string} operation
- * @returns {[number, number, string] | string}
- * 	[a, b, operator] An array with the operands a and b, and their operator.
- * 	Or, a string with a number, the final result, or an ERROR.
+ * @returns {(Operation | string)} Operation or a string with: a number, the final result, or an ERROR.
  */
 function parseOperation(operation) {
 	/*
@@ -424,10 +436,15 @@ function parseOperation(operation) {
 	return [+a, +b, operator];
 }
 
+/* jsdoc
+ * @param {Object[]} Operation
+ * @param {number} Operation[].a First operand.
+ * @param {number} Operation[].b Second operand.
+ * @param {string} Operation[].operator Operator.
+ */
+
 /**
- * @param {number} a First operand.
- * @param {number} b Second operand.
- * @param {string} operator Operator.
+ * @param {Operation}
  * @returns {number} Result.
  */
 function calculate([a, b, operator]) {
